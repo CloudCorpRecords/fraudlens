@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>FraudLens — Interpretable Fraud Detection Dashboard</title>
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+<header>
+  <h1>🔍 FraudLens</h1>
+  <p class="tagline">Interpretable fraud detection for payment transactions — every flag comes with a reason.</p>
+  <p class="meta">DATANOVA 2026 · Cybersecurity &amp; Fraud Detection track · All figures below are real outputs of the model run in <code>run.py</code> on a 100% synthetic, seeded dataset (no real customer data).</p>
+</header>
+
+<section id="cards" class="cards"></section>
+
+<section class="panel">
+  <h2>Model vs. rules-only baseline (held-out test set)</h2>
+  <div id="compare"></div>
+  <p class="note" id="threshold-note"></p>
+</section>
+
+<section class="panel">
+  <h2>Try it: move the decision threshold</h2>
+  <label>Threshold <input type="range" id="thr" min="2" max="98" value="50"> <strong id="thr-val"></strong></label>
+  <div id="live-metrics" class="live"></div>
+  <p class="note">Recomputed live in your browser from the actual test-set scores embedded in this page — drag to see the precision/recall trade-off analysts tune every day.</p>
+</section>
+
+<section class="panel">
+  <h2>Why was it flagged? — feature drivers</h2>
+  <p class="note">Standardised logistic-regression coefficients. Positive = pushes toward fraud. This is the explanation an analyst (and a customer) gets with every alert.</p>
+  <div id="drivers"></div>
+</section>
+
+<section class="panel">
+  <h2>Flagged transactions (test set, highest risk first)</h2>
+  <table id="flagged">
+    <thead><tr><th>Txn</th><th>Amount</th><th>Merchant</th><th>Hour</th><th>Foreign</th><th>Device known</th><th>Velocity 1h</th><th>Risk score</th><th>Actually fraud?</th></tr></thead>
+    <tbody></tbody>
+  </table>
+</section>
+
+<footer>
+  <p>FraudLens · Open source (MIT) · Pipeline: <code>python3 run.py</code> regenerates the dataset, retrains the model and rebuilds this dashboard data deterministically (seeds 42 / 7).</p>
+  <p>Build Disclosure: AI-built. Built by AI agents (Tree / Muse fleet) directed by Rene Turcios during the hackathon period; Rene set the direction and reviewed; agents designed, coded, ran, and documented the analysis.</p>
+</footer>
+<script src="data.js"></script>
+<script src="app.js"></script>
+</body>
+</html>
